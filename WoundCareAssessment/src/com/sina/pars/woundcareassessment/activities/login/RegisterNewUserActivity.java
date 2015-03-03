@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sina.pars.woundcareassessment.R;
-import com.sina.pars.woundcareassessment.model.web.response.ServerResponse;
+import com.sina.pars.woundcareassessment.model.network.web.response.ServerResponse;
 
 import de.greenrobot.event.EventBus;
 

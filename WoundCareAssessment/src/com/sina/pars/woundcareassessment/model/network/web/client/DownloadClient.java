@@ -1,4 +1,4 @@
-package com.sina.pars.woundcareassessment.model.web.client;
+package com.sina.pars.woundcareassessment.model.network.web.client;
 
 
 public class DownloadClient implements WebClient{

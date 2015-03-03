@@ -1,4 +1,4 @@
-package com.sina.pars.woundcareassessment.model.web.response;
+package com.sina.pars.woundcareassessment.model.network.web.response;
 
 import enums.RequestStatus;
 import enums.ServerResponseType;
