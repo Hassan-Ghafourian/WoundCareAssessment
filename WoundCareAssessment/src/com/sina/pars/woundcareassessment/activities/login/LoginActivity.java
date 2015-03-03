@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.sina.pars.woundcareassessment.R;
 import com.sina.pars.woundcareassessment.model.providers.UserDAOImplementer;
 import com.sina.pars.woundcareassessment.model.web.client.WebClient;
-import com.sina.pars.woundcareassessment.model.web.client.WebClientBuilder;
+import com.sina.pars.woundcareassessment.model.web.client.WebClientFactory;
 
 import enums.RequestType;
 
@@ -26,10 +26,10 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				WebClient authenticatingClient = new WebClientBuilder.Builder(
+				WebClient authenticatingClient = new WebClientFactory.Builder(
 						RequestType.Authenticating, "userName").password("password").build().getWebClient();
 				authenticatingClient.sendRequest();
-				WebClient syncClient = new WebClientBuilder.Builder(
+				WebClient syncClient = new WebClientFactory.Builder(
 						RequestType.Sync, "userName").build().getWebClient();
 				syncClient.sendRequest();
 			}

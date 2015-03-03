@@ -2,7 +2,7 @@ package com.sina.pars.woundcareassessment.model.web.client;
 
 import enums.RequestType;
 
-public class WebClientBuilder {
+public class WebClientFactory {
 
 	private final WebClient webClient;
 
@@ -25,12 +25,12 @@ public class WebClientBuilder {
 			return this;
 		}
 
-		public WebClientBuilder build() {
-			return new WebClientBuilder(this);
+		public WebClientFactory build() {
+			return new WebClientFactory(this);
 		}
 	}
 
-	private WebClientBuilder(Builder builder) {
+	private WebClientFactory(Builder builder) {
 		switch (builder.type) {
 		case Authenticating:
 			webClient = new AuthenticatClient(builder.userName,
