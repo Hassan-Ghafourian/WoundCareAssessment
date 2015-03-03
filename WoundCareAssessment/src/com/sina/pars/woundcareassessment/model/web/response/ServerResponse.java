@@ -1,21 +1,18 @@
 package com.sina.pars.woundcareassessment.model.web.response;
 
+import enums.RequestStatus;
 import enums.ServerResponseType;
 
 public abstract class ServerResponse {
 	private final ServerResponseType type;
-	private final boolean isSuccessful;
 	private final Object body;
+	private final RequestStatus status;
 
-	protected ServerResponse(ServerResponseType type, boolean isSuccessful,
+	protected ServerResponse(ServerResponseType type, RequestStatus status,
 			Object body) {
 		this.type = type;
-		this.isSuccessful = isSuccessful;
 		this.body = body;
-	}
-
-	public boolean isSuccessful() {
-		return isSuccessful;
+		this.status = status;
 	}
 
 	public Object getBody() {
@@ -24,6 +21,14 @@ public abstract class ServerResponse {
 
 	public ServerResponseType getType() {
 		return type;
+	}
+
+	/**
+	 * 
+	 * @return status of request
+	 */
+	public RequestStatus getStatus() {
+		return status;
 	}
 
 }

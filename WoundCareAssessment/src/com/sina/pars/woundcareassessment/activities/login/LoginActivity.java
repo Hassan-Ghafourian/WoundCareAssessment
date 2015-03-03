@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.sina.pars.woundcareassessment.R;
 import com.sina.pars.woundcareassessment.model.providers.UserDAOImplementer;
-import com.sina.pars.woundcareassessment.model.web.client.SyncClient;
-import com.sina.pars.woundcareassessment.model.web.response.ServerResponse;
+import com.sina.pars.woundcareassessment.model.web.client.WebClient;
+import com.sina.pars.woundcareassessment.model.web.client.WebClientBuilder;
 
-import de.greenrobot.event.EventBus;
+import enums.RequestType;
 
 public class LoginActivity extends Activity {
 
@@ -27,7 +26,12 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				new SyncClient("tt").sendRequest();
+				WebClient authenticatingClient = new WebClientBuilder.Builder(
+						RequestType.Authenticating, "userName").password("password").build().getWebClient();
+				authenticatingClient.sendRequest();
+				WebClient syncClient = new WebClientBuilder.Builder(
+						RequestType.Sync, "userName").build().getWebClient();
+				syncClient.sendRequest();
 			}
 		});
 		loading();

@@ -1,22 +1,22 @@
 package com.sina.pars.woundcareassessment.model.web.response;
 
+import enums.RequestStatus;
 import enums.ServerResponseType;
 
 public class ResponseFactory {
 
 	public static ServerResponse productResponse(ServerResponseType type,
-			boolean isSuccessful, Object body) {
+			RequestStatus status, Object body) {
 		ServerResponse serverResponse = null;
 		switch (type) {
 		case AuthenticatingResponse:
-			serverResponse = new AuthenticatingResponse(type, isSuccessful,
-					body);
+			serverResponse = new AuthenticatingResponse(type, status, body);
 			break;
 		case DownloadingResponse:
-			serverResponse = new DownloadingResponse(type, isSuccessful, body);
+			serverResponse = new DownloadingResponse(type, status, body);
 			break;
 		case SyncResponse:
-			serverResponse = new SyncResponse(type, isSuccessful, body);
+			serverResponse = new SyncResponse(type, status, body);
 			break;
 		default:
 			break;

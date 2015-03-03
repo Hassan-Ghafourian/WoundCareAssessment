@@ -4,27 +4,26 @@ import android.os.AsyncTask;
 import android.os.SystemClock;
 
 import com.sina.pars.woundcareassessment.model.web.response.ResponseFactory;
-import com.sina.pars.woundcareassessment.model.web.response.ServerResponse;
 import com.sina.pars.woundcareassessment.model.web.response.SyncResponse;
 
 import de.greenrobot.event.EventBus;
+import enums.RequestStatus;
 import enums.ServerResponseType;
 
-public class SyncClient implements Client {
+public class SyncClient implements WebClient {
 
 	/**
 	 * 
 	 * @param userName
 	 * @return
 	 */
-	public SyncClient(String userName) {
+	protected SyncClient(String userName) {
 		// throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ServerResponse sendRequest() {
+	public void sendRequest() {
 		new HttpTask().execute();
-		return null;
 	}
 
 	class HttpTask extends AsyncTask<Void, String, Boolean> {
@@ -41,8 +40,8 @@ public class SyncClient implements Client {
 		@Override
 		protected void onPostExecute(Boolean bool) {
 			SyncResponse syncResponse = (SyncResponse) ResponseFactory
-					.productResponse(ServerResponseType.SyncResponse, true,
-							null);
+					.productResponse(ServerResponseType.SyncResponse,
+							RequestStatus.OK, null);
 			EventBus.getDefault().post(syncResponse);
 		}
 	}

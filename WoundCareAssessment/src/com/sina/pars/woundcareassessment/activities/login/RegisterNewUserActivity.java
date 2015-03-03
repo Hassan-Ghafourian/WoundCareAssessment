@@ -59,8 +59,8 @@ public class RegisterNewUserActivity extends Activity {
 	}
 
 	// This method will be called when a MessageEvent is posted
-	public void onEvent(ServerResponse event) {
-		Toast.makeText(this, String.valueOf(event.isSuccessful()),
+	public void onEvent(ServerResponse response) {
+		Toast.makeText(this, String.valueOf(response.getStatus()),
 				Toast.LENGTH_SHORT).show();
 	}
 

@@ -1,8 +1,7 @@
 package com.sina.pars.woundcareassessment.model.web.client;
 
-import com.sina.pars.woundcareassessment.model.web.response.ServerResponse;
 
-public class AuthenticatClient implements Client{
+public class AuthenticatClient implements WebClient{
 
 	/**
 	 * 
@@ -10,13 +9,12 @@ public class AuthenticatClient implements Client{
 	 * @param password
 	 * @return 
 	 */
-	public AuthenticatClient(String userName, String password) {
+	protected AuthenticatClient(String userName, String password) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ServerResponse sendRequest() {
-		return null;
+	public void sendRequest() {
 	}
 
 }
