@@ -1,6 +1,6 @@
 package com.sina.pars.woundcareassessment.model.network.web.client;
 
-import enums.RequestType;
+import com.sina.pars.woundcareassessment.model.constants.enums.RequestType;
 
 public class WebClientFactory {
 

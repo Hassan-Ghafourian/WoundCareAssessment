@@ -7,11 +7,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.sina.pars.woundcareassessment.R;
+import com.sina.pars.woundcareassessment.model.constants.enums.RequestType;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 import com.sina.pars.woundcareassessment.model.providers.UserDAOImplementer;
-
-import enums.RequestType;
 
 public class LoginActivity extends Activity {
 
