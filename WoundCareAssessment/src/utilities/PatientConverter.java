@@ -33,7 +33,6 @@ public class PatientConverter implements Converter {
 
 		return null;
 	}
-
 //	public static Patient convertPatientStringToPatientObject(String patientJSON) {
 //		PatientPersonalData p = gson.fromJson(new JSONObject(patientJSON)
 //				.getJSONObject("personalData").toString(),
