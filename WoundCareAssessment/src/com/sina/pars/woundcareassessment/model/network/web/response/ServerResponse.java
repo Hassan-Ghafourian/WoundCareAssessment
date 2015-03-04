@@ -31,4 +31,10 @@ public abstract class ServerResponse {
 		return status;
 	}
 
+	@Override
+	public String toString() {
+		return "ServerResponse [type=" + type + ", body=" + body + ", status="
+				+ status + "]";
+	}
+
 }

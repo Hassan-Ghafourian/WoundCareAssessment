@@ -4,13 +4,18 @@ import android.os.AsyncTask;
 import android.os.SystemClock;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.RequestStatus;
+import com.sina.pars.woundcareassessment.model.constants.enums.Role;
 import com.sina.pars.woundcareassessment.model.constants.enums.ServerResponseType;
+import com.sina.pars.woundcareassessment.model.network.connection.Internetconnection;
 import com.sina.pars.woundcareassessment.model.network.web.response.ResponseFactory;
-import com.sina.pars.woundcareassessment.model.network.web.response.SyncResponse;
+import com.sina.pars.woundcareassessment.model.network.web.response.ServerResponse;
 
 import de.greenrobot.event.EventBus;
 
 public class AuthenticatClient implements WebClient {
+
+	private final String userName;
+	private final String password;
 
 	/**
 	 * 
@@ -19,11 +24,26 @@ public class AuthenticatClient implements WebClient {
 	 * @return
 	 */
 	protected AuthenticatClient(String userName, String password) {
-		// throw new UnsupportedOperationException();
+		this.userName = userName;
+		this.password = password;
 	}
 
 	@Override
 	public void sendRequest() {
+		if (!Internetconnection.isDeviceOnline()) {
+			publishResponse(ServerResponseType.AuthenticatingResponse,
+					RequestStatus.ConnectionError, new Object());
+		} else {
+			new HttpTask().execute();
+		}
+	}
+
+	@Override
+	public void publishResponse(ServerResponseType serverResponseType,
+			RequestStatus requestStatus, Object body) {
+		ServerResponse response = ResponseFactory.productResponse(
+				serverResponseType, requestStatus, body);
+		EventBus.getDefault().post(response);
 	}
 
 	class HttpTask extends AsyncTask<Void, String, Boolean> {
@@ -39,10 +59,18 @@ public class AuthenticatClient implements WebClient {
 
 		@Override
 		protected void onPostExecute(Boolean bool) {
-			SyncResponse syncResponse = (SyncResponse) ResponseFactory
-					.productResponse(ServerResponseType.SyncResponse,
-							RequestStatus.OK, null);
-			EventBus.getDefault().post(syncResponse);
+			Role role = null;
+			final String lowerCaseUserName = AuthenticatClient.this.userName
+					.toLowerCase();
+			if (lowerCaseUserName.contains("patient")) {
+				role = Role.Patient;
+			} else if (lowerCaseUserName.contains("expert")) {
+				role = Role.Expert;
+			} else if (lowerCaseUserName.contains("unregistered")) {
+				role = Role.Unregistered;
+			}
+			publishResponse(ServerResponseType.AuthenticatingResponse,
+					RequestStatus.OK, role);
 		}
 	}
 }

@@ -45,4 +45,11 @@ public class SyncClient implements WebClient {
 			EventBus.getDefault().post(syncResponse);
 		}
 	}
+
+	@Override
+	public void publishResponse(ServerResponseType serverResponseType,
+			RequestStatus requestStatus, Object body) {
+		// TODO Auto-generated method stub
+
+	}
 }
