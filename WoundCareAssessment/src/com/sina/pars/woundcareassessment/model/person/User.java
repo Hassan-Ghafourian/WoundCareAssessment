@@ -4,17 +4,18 @@ import com.sina.pars.woundcareassessment.model.constants.enums.Role;
 import com.sina.pars.woundcareassessment.model.data.personal.PersonalData;
 import com.sina.pars.woundcareassessment.model.data.present.Folder;
 
-public class User extends Person {
+public abstract class User {
 
-	private final String userName;
+	private final PersonalData personalData;
 	private final Role role;
 	private final Folder folder;
 
-	protected User(PersonalData personalData, Role role, Folder folder, String userName) {
-		super(personalData);
+	public User(PersonalData personalData, Role role,
+			Folder folder) {
+		super();
+		this.personalData = personalData;
 		this.role = role;
 		this.folder = folder;
-		this.userName = userName;
 	}
 
 	public Role getRole() {
@@ -25,8 +26,9 @@ public class User extends Person {
 		return folder;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
+	
 
+	public PersonalData getPersonalData() {
+		return personalData;
+	}
 }

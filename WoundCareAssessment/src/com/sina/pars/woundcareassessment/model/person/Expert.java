@@ -6,9 +6,10 @@ import com.sina.pars.woundcareassessment.model.data.present.PersonalFolder;
 
 public class Expert extends User {
 
-	protected Expert(PersonalData personalData, PersonalFolder personalFolder,
-			String userName) {
-		super(personalData, Role.Expert, personalFolder, userName);
+	public Expert(String userName, PersonalData personalData, Role role,
+			PersonalFolder personalFolder) {
+		super(personalData, Role.Expert, personalFolder);
 	}
 
+	
 }

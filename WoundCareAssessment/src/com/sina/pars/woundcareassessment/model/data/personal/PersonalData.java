@@ -1,21 +1,16 @@
-
 package com.sina.pars.woundcareassessment.model.data.personal;
 
 import com.sina.pars.woundcareassessment.model.data.Data;
 
 public abstract class PersonalData extends Data {
-	private final int id;
+	private final String userName;
 	private final String name;
 	private final String family;
 
-	public PersonalData(int id, String name, String family) {
-		this.id = id;
+	public PersonalData(String userName, String name, String family) {
+		this.userName = userName;
 		this.name = name;
 		this.family = family;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {
@@ -26,10 +21,14 @@ public abstract class PersonalData extends Data {
 		return family;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
 	@Override
 	public String toString() {
-		return "PersonalData [id=" + id + ", name=" + name + ", family="
-				+ family + "]";
+		return "PersonalData [userName=" + userName + ", name=" + name
+				+ ", family=" + family + "]";
 	}
 
 }

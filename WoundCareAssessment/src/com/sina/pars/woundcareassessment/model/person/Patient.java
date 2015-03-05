@@ -6,9 +6,9 @@ import com.sina.pars.woundcareassessment.model.data.present.PersonalFolder;
 
 public class Patient extends User {
 
-	protected Patient(PersonalData personalData, PersonalFolder personalFolder,
-			String userName) {
-		super(personalData, Role.Patient, personalFolder, userName);
+	public Patient(String userName, PersonalData personalData, Role role,
+			PersonalFolder personalFolder) {
+		super(personalData, Role.Patient, personalFolder);
 	}
 
 }

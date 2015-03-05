@@ -15,11 +15,11 @@ public class PatientPersonalData extends PersonalData {
 	private final String yearofDiagnosis;
 	private final String Comments;
 
-	public PatientPersonalData(int id, String name, String family,
+	public PatientPersonalData(String userName, String name, String family,
 			Gender gender, Date dateOfBirth, String address,
 			WoundSite woundSite, String telephoneNumber,
 			String yearofDiagnosis, String comments) {
-		super(id, name, family);
+		super(userName, name, family);
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
