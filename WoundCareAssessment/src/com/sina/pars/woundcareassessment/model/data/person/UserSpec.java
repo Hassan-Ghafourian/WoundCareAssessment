@@ -1,4 +1,4 @@
-package com.sina.pars.woundcareassessment.model.person;
+package com.sina.pars.woundcareassessment.model.data.person;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.Role;
 import com.sina.pars.woundcareassessment.model.data.personal.PersonalData;

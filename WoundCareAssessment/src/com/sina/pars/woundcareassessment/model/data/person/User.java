@@ -1,4 +1,4 @@
-package com.sina.pars.woundcareassessment.model.person;
+package com.sina.pars.woundcareassessment.model.data.person;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.Role;
 import com.sina.pars.woundcareassessment.model.data.personal.PersonalData;
@@ -12,7 +12,6 @@ public abstract class User {
 
 	public User(PersonalData personalData, Role role,
 			Folder folder) {
-		super();
 		this.personalData = personalData;
 		this.role = role;
 		this.folder = folder;

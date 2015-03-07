@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sina.pars.woundcareassessment.model.person.Patient;
+import com.sina.pars.woundcareassessment.model.data.person.Patient;
 
 public class PatientConverter implements Converter {
 

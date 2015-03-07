@@ -3,7 +3,7 @@ package com.sina.pars.woundcareassessment.model.data.present;
 import java.util.Date;
 
 import com.sina.pars.woundcareassessment.model.data.Data;
-import com.sina.pars.woundcareassessment.model.person.UserSpec;
+import com.sina.pars.woundcareassessment.model.data.person.UserSpec;
 
 public class Comment extends Data{
 
