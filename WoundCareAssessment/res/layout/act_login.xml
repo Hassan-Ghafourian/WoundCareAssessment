@@ -7,6 +7,15 @@
     android:paddingLeft="17dp"
     android:paddingRight="17dp" >
 
+    <Button
+        android:id="@+id/scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:tag="t0"
+        android:text="Scan" />
+
     <EditText
         android:id="@+id/accountName"
         android:layout_width="match_parent"
@@ -14,7 +23,8 @@
         android:layout_marginTop="20dp"
         android:hint="User Name"
         android:inputType="textEmailAddress"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:enabled="false" />
 
     <EditText
         android:id="@+id/accountPassword"
