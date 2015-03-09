@@ -1,7 +1,7 @@
 package com.sina.pars.woundcareassessment.model.network.web.response;
 
-import com.sina.pars.woundcareassessment.model.constants.enums.RequestStatus;
-import com.sina.pars.woundcareassessment.model.constants.enums.ServerResponseType;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestStatus;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.ServerResponseType;
 
 public class AuthenticatingResponse extends ServerResponse {
 

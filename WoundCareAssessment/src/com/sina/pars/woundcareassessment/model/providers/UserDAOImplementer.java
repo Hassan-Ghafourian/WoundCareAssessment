@@ -15,26 +15,26 @@ public class UserDAOImplementer implements UserDAO {
 	}
 
 	@Override
-	public int delete() {
+	public int delete(UserDAOMethodsInput userDAOMethodsInput) {
 		
 		return 0;
 	}
 
 	@Override
-	public Uri insert() {
+	public Uri insert(UserDAOMethodsInput userDAOMethodsInput) {
 		providerClient = App.getAppContext().getContentResolver()
-				.acquireContentProviderClient(UserProviderConstants.AUTHORITY);
+				.acquireContentProviderClient(UserProviderMetaData.AUTHORITY);
 		return null;
 	}
 
 	@Override
-	public Cursor query() {
+	public Cursor query(UserDAOMethodsInput userDAOMethodsInput) {
 
 		return null;
 	}
 
 	@Override
-	public int update() {
+	public int update(UserDAOMethodsInput userDAOMethodsInput) {
 
 		return 0;
 	}

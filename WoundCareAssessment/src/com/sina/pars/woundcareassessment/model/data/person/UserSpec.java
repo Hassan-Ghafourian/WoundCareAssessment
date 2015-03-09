@@ -1,6 +1,6 @@
 package com.sina.pars.woundcareassessment.model.data.person;
 
-import com.sina.pars.woundcareassessment.model.constants.enums.Role;
+import com.sina.pars.woundcareassessment.model.constants.enums.data.Role;
 import com.sina.pars.woundcareassessment.model.data.personal.PersonalData;
 
 public class UserSpec {

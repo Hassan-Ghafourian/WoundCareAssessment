@@ -3,8 +3,8 @@ package com.sina.pars.woundcareassessment.model.network.web.client;
 import android.content.Context;
 
 import com.sina.pars.woundcareassessment.application.App;
-import com.sina.pars.woundcareassessment.model.constants.enums.RequestStatus;
-import com.sina.pars.woundcareassessment.model.constants.enums.ServerResponseType;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestStatus;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.ServerResponseType;
 
 public interface WebClient {
 

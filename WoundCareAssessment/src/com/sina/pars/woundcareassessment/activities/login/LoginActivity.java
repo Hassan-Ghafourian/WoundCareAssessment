@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sina.pars.woundcareassessment.R;
-import com.sina.pars.woundcareassessment.model.constants.enums.RequestType;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 import com.sina.pars.woundcareassessment.model.network.web.response.ServerResponse;
@@ -36,7 +36,7 @@ public class LoginActivity extends Activity {
 		
 		initUIElementsAndListeners();
 		
-		loading();
+//		loading();
 	}
 	
 	/**

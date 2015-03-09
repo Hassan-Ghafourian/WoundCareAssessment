@@ -2,7 +2,7 @@ package com.sina.pars.woundcareassessment.model.data.present;
 
 import java.util.List;
 
-import com.sina.pars.woundcareassessment.model.constants.enums.WoundSite;
+import com.sina.pars.woundcareassessment.model.constants.enums.data.WoundSite;
 import com.sina.pars.woundcareassessment.model.data.bradenassessment.BradenAssessment;
 
 public class WoundDoc extends Document {

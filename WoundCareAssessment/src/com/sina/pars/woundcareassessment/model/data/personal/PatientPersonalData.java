@@ -2,7 +2,7 @@ package com.sina.pars.woundcareassessment.model.data.personal;
 
 import java.util.Date;
 
-import com.sina.pars.woundcareassessment.model.constants.enums.Gender;
+import com.sina.pars.woundcareassessment.model.constants.enums.data.Gender;
 
 public class PatientPersonalData extends PersonalData {
 	private final Gender gender;

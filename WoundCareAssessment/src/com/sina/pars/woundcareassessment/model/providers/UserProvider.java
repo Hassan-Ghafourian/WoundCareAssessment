@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class UserProvider extends ContentProvider {
 
@@ -38,6 +39,7 @@ public class UserProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
+		Log.d("Tag", "UserProvider.onCreate()");
 		this.context = getContext();
 		File file = context.getFileStreamPath(LOCAL_DATA_FILE_NAME);
 		if (file.exists()) {
