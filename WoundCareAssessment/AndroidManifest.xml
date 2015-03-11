@@ -38,8 +38,8 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider
-            android:name="com.sina.pars.woundcareassessment.model.providers.UserProvider"
-            android:authorities="com.sina.pars.woundcareassessment.model.providers.UserProvider" >
+            android:name="com.sina.pars.woundcareassessment.model.providers.LocalUserProvider"
+            android:authorities="com.sina.pars.woundcareassessment.model.providers.LocalUserProvider" >
         </provider>
     </application>
 

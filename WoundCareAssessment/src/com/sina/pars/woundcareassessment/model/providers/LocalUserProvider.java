@@ -8,16 +8,26 @@ import java.io.IOException;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
 
-public class UserProvider extends ContentProvider {
+public class LocalUserProvider extends ContentProvider {
 
+	private static final int INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR = 1;
+	private static UriMatcher uriMatcher;
 	private Context context;
-
-	private static final String LOCAL_DATA_FILE_NAME = "test";
+	private static final String LOCAL_DATA_FILE_NAME = "local data file";
 	private String tree;
+
+	static {
+		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+		uriMatcher.addURI(LocalUserProviderMetaData.AUTHORITY,
+				LocalUserProviderMetaData.LocalUserTableMetaData.TABLE_NAME + "/*",
+				INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR);
+	}
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -28,7 +38,13 @@ public class UserProvider extends ContentProvider {
 	@Override
 	public String getType(Uri uri) {
 
-		return null;
+		switch (uriMatcher.match(uri)) {
+		case INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR:
+			return LocalUserProviderMetaData.LocalUserTableMetaData.CONTENT_ITEM_TYPE;
+		default:
+			throw new IllegalArgumentException("the URI >> " + uri.toString()
+					+ "does not match");
+		}
 	}
 
 	@Override
@@ -48,7 +64,6 @@ public class UserProvider extends ContentProvider {
 				return false;
 			}
 		} else {
-			// file.createNewFile();
 			WriteFile(LOCAL_DATA_FILE_NAME, "In the name of God");
 			tree = "";
 		}
@@ -58,8 +73,15 @@ public class UserProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
-
-		return null;
+		switch (uriMatcher.match(uri)) {
+		case INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR:
+			String userName = uri.getPathSegments().get(1);
+			MatrixCursor cursor = new MatrixCursor(new String[] { "column1" });
+			return cursor;
+		default:
+			throw new IllegalArgumentException("the URI >> [" + uri.toString()
+					+ "] does not match");
+		}
 	}
 
 	@Override
@@ -85,12 +107,11 @@ public class UserProvider extends ContentProvider {
 				try {
 					fis.close();
 				} catch (IOException e) {
-					// swallow
 				}
 			}
 
 		}
-		
+
 	}
 
 	/**
@@ -114,7 +135,6 @@ public class UserProvider extends ContentProvider {
 					fos.flush();
 					fos.close();
 				} catch (IOException e) {
-					// swallow
 				}
 			}
 		}
