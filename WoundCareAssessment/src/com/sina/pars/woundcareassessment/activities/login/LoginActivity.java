@@ -92,8 +92,9 @@ public class LoginActivity extends Activity {
 	}
 
 	private void loading() {
-		Cursor cursor = new UserDAOImplementer().query(new UserDAOMethodsInput(
-				EffectDestinationType.LOCAL));
+		Cursor cursor = UserDAOImplementer.getInstance()
+				.query(new UserDAOMethodsInput(EffectDestinationType.LOCAL,
+						null, null));
 		cursor.getCount();
 	}
 

@@ -5,21 +5,21 @@ import com.sina.pars.woundcareassessment.model.data.person.User;
 
 public class UserDAOMethodsInput {
 	private final EffectDestinationType effectDestinationType;
-	private String userName = "";
-	private User user;
+	private String userName;
+	private final User user;
 
-	public UserDAOMethodsInput(EffectDestinationType effectDestinationType) {
+	public UserDAOMethodsInput(EffectDestinationType effectDestinationType,
+			String userName, User user) {
 		this.effectDestinationType = effectDestinationType;
-	}
-
-	public UserDAOMethodsInput setUser(User user) {
-		this.user = user;
-		return this;
-	}
-
-	public UserDAOMethodsInput setUserName(String userName) {
 		this.userName = userName;
-		return this;
+		this.user = user;
+		if (user != null) {
+			this.userName = user.getPersonalData().getUserName();
+		}
+		if (userName == null) {
+			throw new IllegalArgumentException(
+					"Atleast one of the user or userName in input arguments must be null");
+		}
 	}
 
 	public EffectDestinationType getEffectDestinationType() {
