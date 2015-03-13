@@ -18,7 +18,7 @@ public class UserDAOMethodsInput {
 		}
 		if (userName == null) {
 			throw new IllegalArgumentException(
-					"Atleast one of the user or userName in input arguments must be null");
+					"Atleast one of the user or userName in input arguments must not be null");
 		}
 	}
 

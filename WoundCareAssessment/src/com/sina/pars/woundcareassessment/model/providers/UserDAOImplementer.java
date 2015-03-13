@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.RemoteException;
 
 import com.sina.pars.woundcareassessment.application.App;
+import com.sina.pars.woundcareassessment.model.data.person.User;
 
 /**
  * <b>Singleton</b> class,because one instance of this class can respond to all
@@ -82,7 +83,7 @@ public class UserDAOImplementer implements UserDAO {
 	}
 
 	/**
-	 * builds uri of associated <b>local</b> data from userDAOMethodsInput's
+	 * builds uri of associated <b>single local</b> data from userDAOMethodsInput's
 	 * content.<br/>
 	 * uri will be combine of Authority of LocalUserProvider,path of
 	 * LocalUserTable and userName.
@@ -96,5 +97,11 @@ public class UserDAOImplementer implements UserDAO {
 		return Uri
 				.parse(LocalUserProviderMetaData.LocalUserTableMetaData.CONTENT_URI
 						+ userName);
+	}
+
+	@Override
+	public User sync(UserDAOMethodsInput userDAOMethodsInput) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -5,6 +5,8 @@ import android.os.SystemClock;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestStatus;
 import com.sina.pars.woundcareassessment.model.constants.enums.network.ServerResponseType;
+import com.sina.pars.woundcareassessment.model.data.person.User;
+import com.sina.pars.woundcareassessment.model.network.connection.Internetconnection;
 import com.sina.pars.woundcareassessment.model.network.web.response.ResponseFactory;
 import com.sina.pars.woundcareassessment.model.network.web.response.SyncResponse;
 
@@ -12,18 +14,23 @@ import de.greenrobot.event.EventBus;
 
 public class SyncClient implements WebClient {
 
+	private final User user;
 	/**
 	 * 
-	 * @param userName
-	 * @return
+	 * @param user
 	 */
-	protected SyncClient(String userName) {
-		// throw new UnsupportedOperationException();
+	protected SyncClient(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public void sendRequest() {
-		new HttpTask().execute();
+		if (!Internetconnection.isDeviceOnline()) {
+			publishResponse(ServerResponseType.SyncResponse,
+					RequestStatus.ConnectionError, new Object());
+		} else {
+			new HttpTask().execute();
+		}
 	}
 
 	class HttpTask extends AsyncTask<Void, String, Boolean> {
@@ -41,7 +48,7 @@ public class SyncClient implements WebClient {
 		protected void onPostExecute(Boolean bool) {
 			SyncResponse syncResponse = (SyncResponse) ResponseFactory
 					.productResponse(ServerResponseType.SyncResponse,
-							RequestStatus.OK, null);
+							RequestStatus.OK, user);
 			EventBus.getDefault().post(syncResponse);
 		}
 	}

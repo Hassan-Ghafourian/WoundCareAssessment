@@ -1,5 +1,7 @@
 package com.sina.pars.woundcareassessment.model.network.web.client;
 
+import java.util.Locale;
+
 import android.os.AsyncTask;
 import android.os.SystemClock;
 
@@ -61,7 +63,7 @@ public class AuthenticatClient implements WebClient {
 		protected void onPostExecute(Boolean bool) {
 			Role role = null;
 			final String lowerCaseUserName = AuthenticatClient.this.userName
-					.toLowerCase();
+					.toLowerCase(Locale.getDefault());
 			if (lowerCaseUserName.contains("patient")) {
 				role = Role.Patient;
 			} else if (lowerCaseUserName.contains("expert")) {

@@ -10,7 +10,7 @@ public abstract class User {
 	private final Role role;
 	private final Folder folder;
 
-	public User(PersonalData personalData, Role role,
+	protected User(PersonalData personalData, Role role,
 			Folder folder) {
 		this.personalData = personalData;
 		this.role = role;

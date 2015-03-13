@@ -5,7 +5,6 @@ import jim.h.common.android.lib.zxing.integrator.IntentIntegrator;
 import jim.h.common.android.lib.zxing.integrator.IntentResult;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,13 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sina.pars.woundcareassessment.R;
+import com.sina.pars.woundcareassessment.model.constants.enums.data.Role;
 import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
-import com.sina.pars.woundcareassessment.model.constants.enums.userdao.EffectDestinationType;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.ServerResponseType;
+import com.sina.pars.woundcareassessment.model.data.person.Newcomer;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 import com.sina.pars.woundcareassessment.model.network.web.response.ServerResponse;
-import com.sina.pars.woundcareassessment.model.providers.UserDAOImplementer;
-import com.sina.pars.woundcareassessment.model.providers.UserDAOMethodsInput;
 
 import de.greenrobot.event.EventBus;
 
@@ -38,8 +37,6 @@ public class LoginActivity extends Activity {
 		this.setContentView(R.layout.act_login);
 
 		initUIElementsAndListeners();
-
-		loading();
 	}
 
 	/**
@@ -56,8 +53,8 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				WebClient authenticatingClient = new WebClientFactory.Builder(
-						RequestType.Authenticating, userName.getText()
-								.toString())
+						RequestType.Authenticating)
+						.userName(userName.getText().toString())
 						.password(password.getText().toString()).build()
 						.getWebClient();
 				authenticatingClient.sendRequest();
@@ -91,13 +88,6 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	private void loading() {
-		Cursor cursor = UserDAOImplementer.getInstance()
-				.query(new UserDAOMethodsInput(EffectDestinationType.LOCAL,
-						null, null));
-		cursor.getCount();
-	}
-
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -112,7 +102,19 @@ public class LoginActivity extends Activity {
 	}
 
 	public void onEvent(ServerResponse response) {
-		Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT).show();
-	}
+		if (response.getType() == ServerResponseType.AuthenticatingResponse) {
 
+			switch (response.getStatus()) {
+			case OK:
+				Newcomer newcomer = new Newcomer((Role) response.getBody(),
+						userName.getText().toString());
+
+				break;
+			default:
+				Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT)
+						.show();
+				break;
+			}
+		}
+	}
 }
