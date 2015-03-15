@@ -12,6 +12,11 @@ import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFacto
 public class SafeRawUser {
 	private String rawData;
 
+	/**
+	 * posts associated <b>safe</b> "user" instance to client.
+	 * 
+	 * @param userName
+	 */
 	public static void getSafe(String userName) {
 		String raw = "";
 		Cursor cursor = queryLocal(userName);
@@ -20,9 +25,7 @@ public class SafeRawUser {
 			raw = cursor.getString(0);
 			cursor.close();
 			User user = new UserConverter().convert(User.class, raw);
-			WebClient syncClient = new WebClientFactory.Builder(
-					RequestType.Sync).user(user).build().getWebClient();
-			syncClient.sendRequest();
+			syncUser(user);
 		} else {
 			return;
 		}
@@ -32,5 +35,11 @@ public class SafeRawUser {
 		return UserDAOImplementer.getInstance().query(
 				new UserDAOMethodsInput(EffectDestinationType.LOCAL, userName,
 						null));
+	}
+
+	private static void syncUser(User user) {
+		UserDAOImplementer.getInstance().sync(
+				new UserDAOMethodsInput(EffectDestinationType.REMOTE, "",
+						user));
 	}
 }

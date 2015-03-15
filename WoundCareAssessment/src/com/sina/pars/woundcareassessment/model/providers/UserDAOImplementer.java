@@ -6,7 +6,11 @@ import android.net.Uri;
 import android.os.RemoteException;
 
 import com.sina.pars.woundcareassessment.application.App;
+import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
+import com.sina.pars.woundcareassessment.model.constants.enums.userdao.EffectDestinationType;
 import com.sina.pars.woundcareassessment.model.data.person.User;
+import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
+import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 
 /**
  * <b>Singleton</b> class,because one instance of this class can respond to all
@@ -45,9 +49,9 @@ public class UserDAOImplementer implements UserDAO {
 		switch (userDAOMethodsInput.getEffectDestinationType()) {
 		case LOCAL:
 			try {
-				return providerClient.query(
-						buildUriFromUserDAOMethodsInputContent(userDAOMethodsInput), null,
-						null, null, null);
+				return providerClient
+						.query(buildUriFromUserDAOMethodsInputContent(userDAOMethodsInput),
+								null, null, null, null);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -83,8 +87,8 @@ public class UserDAOImplementer implements UserDAO {
 	}
 
 	/**
-	 * builds uri of associated <b>single local</b> data from userDAOMethodsInput's
-	 * content.<br/>
+	 * builds uri of associated <b>single local</b> data from
+	 * userDAOMethodsInput's content.<br/>
 	 * uri will be combine of Authority of LocalUserProvider,path of
 	 * LocalUserTable and userName.
 	 * 
@@ -100,8 +104,17 @@ public class UserDAOImplementer implements UserDAO {
 	}
 
 	@Override
-	public User sync(UserDAOMethodsInput userDAOMethodsInput) {
-		// TODO Auto-generated method stub
-		return null;
+	public void sync(UserDAOMethodsInput userDAOMethodsInput) {
+		User user = userDAOMethodsInput.getUser();
+		if (user == null) {
+			throw new IllegalArgumentException(
+					"userDAOMethodsInput.getUser() returned null");
+		} else if (userDAOMethodsInput.getEffectDestinationType() != EffectDestinationType.REMOTE) {
+			throw new IllegalArgumentException(
+					"userDAOMethodsInput.getEffectDestinationType() must be EffectDestinationType.REMOTE");
+		}
+		WebClient syncClient = new WebClientFactory.Builder(RequestType.Sync)
+				.user(user).build().getWebClient();
+		syncClient.sendRequest();
 	}
 }

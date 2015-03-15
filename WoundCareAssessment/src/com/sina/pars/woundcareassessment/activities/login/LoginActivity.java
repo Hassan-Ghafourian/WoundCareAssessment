@@ -1,5 +1,8 @@
 package com.sina.pars.woundcareassessment.activities.login;
 
+import utilities.dialog.Alertable;
+import utilities.dialog.TryAgainResult;
+import utilities.dialog.WebCilentTryAgainDialog;
 import jim.h.common.android.lib.zxing.config.ZXingLibConfig;
 import jim.h.common.android.lib.zxing.integrator.IntentIntegrator;
 import jim.h.common.android.lib.zxing.integrator.IntentResult;
@@ -20,10 +23,11 @@ import com.sina.pars.woundcareassessment.model.data.person.Newcomer;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 import com.sina.pars.woundcareassessment.model.network.web.response.ServerResponse;
+import com.sina.pars.woundcareassessment.model.providers.SafeRawUser;
 
 import de.greenrobot.event.EventBus;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements Alertable{
 
 	Button signIn;
 	Button scan;
@@ -52,12 +56,7 @@ public class LoginActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				WebClient authenticatingClient = new WebClientFactory.Builder(
-						RequestType.Authenticating)
-						.userName(userName.getText().toString())
-						.password(password.getText().toString()).build()
-						.getWebClient();
-				authenticatingClient.sendRequest();
+				authenticate();
 			}
 		});
 		scan.setOnClickListener(new OnClickListener() {
@@ -101,20 +100,51 @@ public class LoginActivity extends Activity {
 		super.onStop();
 	}
 
+	private void authenticate(){
+		WebClient authenticatingClient = new WebClientFactory.Builder(
+				RequestType.Authenticating)
+				.userName(userName.getText().toString())
+				.password(password.getText().toString()).build()
+				.getWebClient();
+		authenticatingClient.sendRequest();
+	}
+	private void getSafeRawUser(){
+		SafeRawUser.getSafe(userName.getText().toString());
+	}
+	
 	public void onEvent(ServerResponse response) {
 		if (response.getType() == ServerResponseType.AuthenticatingResponse) {
-
 			switch (response.getStatus()) {
 			case OK:
 				Newcomer newcomer = new Newcomer((Role) response.getBody(),
 						userName.getText().toString());
-
+				getSafeRawUser();
 				break;
 			default:
-				Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT)
-						.show();
+				WebCilentTryAgainDialog.setListenersAndShow(this, response);
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void onAlert(ServerResponse response, TryAgainResult tryAgainResult) {
+		if (tryAgainResult == TryAgainResult.YES){
+			switch(response.getType()){
+			case AuthenticatingResponse:
+				authenticate();
+				break;
+			case DownloadingResponse:
+				getSafeRawUser();
+				break;
+			case SyncResponse:
+				getSafeRawUser();
+				break;
+			default:
+				break;
+			
+			}
+		}
+		
 	}
 }
