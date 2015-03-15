@@ -1,13 +1,11 @@
 package com.sina.pars.woundcareassessment.model.providers;
 
 import utilities.UserConverter;
+import utilities.id.ID;
 import android.database.Cursor;
 
-import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
 import com.sina.pars.woundcareassessment.model.constants.enums.userdao.EffectDestinationType;
 import com.sina.pars.woundcareassessment.model.data.person.User;
-import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
-import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 
 public class SafeRawUser {
 	private String rawData;
@@ -17,29 +15,29 @@ public class SafeRawUser {
 	 * 
 	 * @param userName
 	 */
-	public static void getSafe(String userName) {
+	public static void getSafe(String userName, ID id) {
 		String raw = "";
-		Cursor cursor = queryLocal(userName);
+		Cursor cursor = queryLocal(userName, id);
 		if (cursor.getCount() != 0) {
 			cursor.moveToFirst();
 			raw = cursor.getString(0);
 			cursor.close();
 			User user = new UserConverter().convert(User.class, raw);
-			syncUser(user);
+			syncUser(user, id);
 		} else {
 			return;
 		}
 	}
 
-	private static Cursor queryLocal(String userName) {
+	private static Cursor queryLocal(String userName, ID id) {
 		return UserDAOImplementer.getInstance().query(
-				new UserDAOMethodsInput(EffectDestinationType.LOCAL, userName,
-						null));
+				new UserDAOMethodsInput(id, EffectDestinationType.LOCAL,
+						userName, null));
 	}
 
-	private static void syncUser(User user) {
+	private static void syncUser(User user, ID id) {
 		UserDAOImplementer.getInstance().sync(
-				new UserDAOMethodsInput(EffectDestinationType.REMOTE, "",
+				new UserDAOMethodsInput(null, EffectDestinationType.REMOTE, "",
 						user));
 	}
 }

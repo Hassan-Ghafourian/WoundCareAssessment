@@ -2,6 +2,7 @@ package com.sina.pars.woundcareassessment.model.network.web.client;
 
 import java.util.Locale;
 
+import utilities.id.ID;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 
@@ -18,23 +19,19 @@ public class AuthenticatClient implements WebClient {
 
 	private final String userName;
 	private final String password;
+	private final ID id;
 
-	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 * @return
-	 */
-	protected AuthenticatClient(String userName, String password) {
+	protected AuthenticatClient(String userName, String password, ID id) {
 		this.userName = userName;
 		this.password = password;
+		this.id = id;
 	}
 
 	@Override
 	public void sendRequest() {
 		if (!Internetconnection.isDeviceOnline()) {
 			publishResponse(ServerResponseType.AuthenticatingResponse,
-					RequestStatus.ConnectionError, new Object());
+					RequestStatus.ConnectionError, new Object(), id);
 		} else {
 			new HttpTask().execute();
 		}
@@ -42,9 +39,9 @@ public class AuthenticatClient implements WebClient {
 
 	@Override
 	public void publishResponse(ServerResponseType serverResponseType,
-			RequestStatus requestStatus, Object body) {
+			RequestStatus requestStatus, Object body, ID id) {
 		ServerResponse response = ResponseFactory.productResponse(
-				serverResponseType, requestStatus, body);
+				serverResponseType, requestStatus, body, id);
 		EventBus.getDefault().post(response);
 	}
 
@@ -72,7 +69,7 @@ public class AuthenticatClient implements WebClient {
 				role = Role.Unregistered;
 			}
 			publishResponse(ServerResponseType.AuthenticatingResponse,
-					RequestStatus.OK, role);
+					RequestStatus.OK, role, id);
 		}
 	}
 }

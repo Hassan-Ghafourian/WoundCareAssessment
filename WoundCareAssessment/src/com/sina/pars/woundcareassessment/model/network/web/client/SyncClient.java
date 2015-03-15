@@ -1,5 +1,6 @@
 package com.sina.pars.woundcareassessment.model.network.web.client;
 
+import utilities.id.ID;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 
@@ -15,19 +16,19 @@ import de.greenrobot.event.EventBus;
 public class SyncClient implements WebClient {
 
 	private final User user;
-	/**
-	 * 
-	 * @param user
-	 */
-	protected SyncClient(User user) {
+	private final ID id;
+
+	
+	protected SyncClient(User user, ID id) {
 		this.user = user;
+		this.id = id;
 	}
 
 	@Override
 	public void sendRequest() {
 		if (!Internetconnection.isDeviceOnline()) {
 			publishResponse(ServerResponseType.SyncResponse,
-					RequestStatus.ConnectionError, new Object());
+					RequestStatus.ConnectionError, new Object(), id);
 		} else {
 			new HttpTask().execute();
 		}
@@ -48,14 +49,14 @@ public class SyncClient implements WebClient {
 		protected void onPostExecute(Boolean bool) {
 			SyncResponse syncResponse = (SyncResponse) ResponseFactory
 					.productResponse(ServerResponseType.SyncResponse,
-							RequestStatus.OK, user);
+							RequestStatus.OK, user,id);
 			EventBus.getDefault().post(syncResponse);
 		}
 	}
 
 	@Override
 	public void publishResponse(ServerResponseType serverResponseType,
-			RequestStatus requestStatus, Object body) {
+			RequestStatus requestStatus, Object body, ID id) {
 		// TODO Auto-generated method stub
 
 	}

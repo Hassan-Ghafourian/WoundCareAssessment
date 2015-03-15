@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.sina.pars.woundcareassessment.model.constants.metadata.LocalUserProviderMetaData;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;

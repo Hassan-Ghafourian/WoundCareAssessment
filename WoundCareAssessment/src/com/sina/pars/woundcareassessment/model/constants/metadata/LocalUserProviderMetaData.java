@@ -1,4 +1,6 @@
-package com.sina.pars.woundcareassessment.model.providers;
+package com.sina.pars.woundcareassessment.model.constants.metadata;
+
+import com.sina.pars.woundcareassessment.model.constants.Constants;
 
 import android.net.Uri;
 

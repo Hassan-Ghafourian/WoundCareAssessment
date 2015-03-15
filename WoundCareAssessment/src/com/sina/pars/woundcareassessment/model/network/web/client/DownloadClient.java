@@ -1,17 +1,19 @@
 package com.sina.pars.woundcareassessment.model.network.web.client;
 
+import utilities.id.ID;
+
 import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestStatus;
 import com.sina.pars.woundcareassessment.model.constants.enums.network.ServerResponseType;
 
 public class DownloadClient implements WebClient {
 
-	/**
-	 * 
-	 * @param userName
-	 * @return
-	 */
-	protected DownloadClient(String userName) {
-		throw new UnsupportedOperationException();
+	private final String userName;
+	private final ID id;
+	
+
+	protected DownloadClient(String userName, ID id) {
+		this.userName = userName;
+		this.id = id;
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class DownloadClient implements WebClient {
 
 	@Override
 	public void publishResponse(ServerResponseType serverResponseType,
-			RequestStatus requestStatus, Object body) {
+			RequestStatus requestStatus, Object body, ID id) {
 		// TODO Auto-generated method stub
 
 	}

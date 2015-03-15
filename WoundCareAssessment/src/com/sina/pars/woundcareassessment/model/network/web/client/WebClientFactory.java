@@ -1,5 +1,7 @@
 package com.sina.pars.woundcareassessment.model.network.web.client;
 
+import utilities.id.ID;
+
 import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
 import com.sina.pars.woundcareassessment.model.data.person.User;
 
@@ -10,17 +12,21 @@ public class WebClientFactory {
 	public static class Builder {
 		// Required parameters
 		private final RequestType type;
+		private final ID id;
 
 		// Optional parameters
 		private String password = "";
 		private User user;
 		private String userName;
 
-		public Builder(RequestType type) {
-			this.type = type;
-		}
 
 		
+		public Builder(RequestType type, ID id) {
+			this.type = type;
+			this.id = id;
+		}
+
+
 		public Builder userName(String userName) {
 			this.userName = userName;
 			return this;
@@ -46,13 +52,13 @@ public class WebClientFactory {
 		switch (builder.type) {
 		case Authenticating:
 			webClient = new AuthenticatClient(builder.userName,
-					builder.password);
+					builder.password, builder.id);
 			break;
 		case Downloading:
-			webClient = new DownloadClient(builder.userName);
+			webClient = new DownloadClient(builder.userName, builder.id);
 			break;
 		case Sync:
-			webClient = new SyncClient(builder.user);
+			webClient = new SyncClient(builder.user, builder.id);
 			break;
 
 		default:

@@ -1,11 +1,13 @@
 package com.sina.pars.woundcareassessment.activities.login;
 
-import utilities.dialog.Alertable;
-import utilities.dialog.TryAgainResult;
-import utilities.dialog.WebCilentTryAgainDialog;
 import jim.h.common.android.lib.zxing.config.ZXingLibConfig;
 import jim.h.common.android.lib.zxing.integrator.IntentIntegrator;
 import jim.h.common.android.lib.zxing.integrator.IntentResult;
+import utilities.dialog.Alertable;
+import utilities.dialog.TryAgainResult;
+import utilities.dialog.WebCilentTryAgainDialog;
+import utilities.id.ID;
+import utilities.id.IdentifiedObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.sina.pars.woundcareassessment.R;
 import com.sina.pars.woundcareassessment.model.constants.enums.data.Role;
 import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
 import com.sina.pars.woundcareassessment.model.constants.enums.network.ServerResponseType;
+import com.sina.pars.woundcareassessment.model.constants.metadata.LoginActivityMetaData;
 import com.sina.pars.woundcareassessment.model.data.person.Newcomer;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
@@ -27,7 +30,8 @@ import com.sina.pars.woundcareassessment.model.providers.SafeRawUser;
 
 import de.greenrobot.event.EventBus;
 
-public class LoginActivity extends Activity implements Alertable{
+public class LoginActivity extends Activity implements Alertable,
+		IdentifiedObject<ID> {
 
 	Button signIn;
 	Button scan;
@@ -100,51 +104,70 @@ public class LoginActivity extends Activity implements Alertable{
 		super.onStop();
 	}
 
-	private void authenticate(){
+	private void authenticate() {
 		WebClient authenticatingClient = new WebClientFactory.Builder(
-				RequestType.Authenticating)
+				RequestType.Authenticating,
+				getId(LoginActivityMetaData.Methods.AUTHENTICATE))
 				.userName(userName.getText().toString())
-				.password(password.getText().toString()).build()
-				.getWebClient();
+				.password(password.getText().toString()).build().getWebClient();
 		authenticatingClient.sendRequest();
 	}
-	private void getSafeRawUser(){
-		SafeRawUser.getSafe(userName.getText().toString());
+
+	private void getSafeRawUser() {
+		SafeRawUser.getSafe(userName.getText().toString(),
+				getId(LoginActivityMetaData.Methods.GET_SAFE_RAW_USER));
 	}
-	
+
 	public void onEvent(ServerResponse response) {
-		if (response.getType() == ServerResponseType.AuthenticatingResponse) {
-			switch (response.getStatus()) {
-			case OK:
-				Newcomer newcomer = new Newcomer((Role) response.getBody(),
-						userName.getText().toString());
-				getSafeRawUser();
-				break;
-			default:
-				WebCilentTryAgainDialog.setListenersAndShow(this, response);
-				break;
+		if (this.matchID(response.getId())) {
+			if (response.getType() == ServerResponseType.AuthenticatingResponse) {
+				switch (response.getStatus()) {
+				case OK:
+					Newcomer newcomer = new Newcomer((Role) response.getBody(),
+							userName.getText().toString());
+					getSafeRawUser();
+					break;
+				default:
+					WebCilentTryAgainDialog.setListenersAndShow(this, response);
+					break;
+				}
 			}
+			// TODO Add other situations ...
 		}
 	}
 
 	@Override
 	public void onAlert(ServerResponse response, TryAgainResult tryAgainResult) {
-		if (tryAgainResult == TryAgainResult.YES){
-			switch(response.getType()){
-			case AuthenticatingResponse:
-				authenticate();
-				break;
-			case DownloadingResponse:
-				getSafeRawUser();
-				break;
-			case SyncResponse:
-				getSafeRawUser();
-				break;
-			default:
-				break;
-			
-			}
+		if (tryAgainResult == TryAgainResult.YES) {
+			matchSwitch(response.getId());
 		}
-		
 	}
+
+	@Override
+	public ID getId(Object idSwitch) {
+		return new ID(this.getClass(), idSwitch);
+	}
+
+	@Override
+	public void matchSwitch(ID id) {
+		switch ((LoginActivityMetaData.Methods) id.getIdSwitch()) {
+		case AUTHENTICATE:
+			authenticate();
+			break;
+		case GET_SAFE_RAW_USER:
+			getSafeRawUser();
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public boolean matchID(ID id) {
+		if (LoginActivityMetaData.ID_CLASS.equals(id.getIdClass())) {
+			return true;
+		}
+		return false;
+	}
+
 }

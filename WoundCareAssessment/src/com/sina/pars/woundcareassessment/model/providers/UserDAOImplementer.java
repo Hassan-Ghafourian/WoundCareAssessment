@@ -8,6 +8,7 @@ import android.os.RemoteException;
 import com.sina.pars.woundcareassessment.application.App;
 import com.sina.pars.woundcareassessment.model.constants.enums.network.RequestType;
 import com.sina.pars.woundcareassessment.model.constants.enums.userdao.EffectDestinationType;
+import com.sina.pars.woundcareassessment.model.constants.metadata.LocalUserProviderMetaData;
 import com.sina.pars.woundcareassessment.model.data.person.User;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
@@ -49,9 +50,9 @@ public class UserDAOImplementer implements UserDAO {
 		switch (userDAOMethodsInput.getEffectDestinationType()) {
 		case LOCAL:
 			try {
-				return providerClient
-						.query(buildUriFromUserDAOMethodsInputContent(userDAOMethodsInput),
-								null, null, null, null);
+				return providerClient.query(
+						buildUriForUserDAOMethodsInput(userDAOMethodsInput),
+						null, null, null, null);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -95,7 +96,7 @@ public class UserDAOImplementer implements UserDAO {
 	 * @param userDAOMethodsInput
 	 * @return
 	 */
-	private Uri buildUriFromUserDAOMethodsInputContent(
+	private Uri buildUriForUserDAOMethodsInput(
 			UserDAOMethodsInput userDAOMethodsInput) {
 		String userName = userDAOMethodsInput.getUserName();
 		return Uri
@@ -113,8 +114,8 @@ public class UserDAOImplementer implements UserDAO {
 			throw new IllegalArgumentException(
 					"userDAOMethodsInput.getEffectDestinationType() must be EffectDestinationType.REMOTE");
 		}
-		WebClient syncClient = new WebClientFactory.Builder(RequestType.Sync)
-				.user(user).build().getWebClient();
+		WebClient syncClient = new WebClientFactory.Builder(RequestType.Sync,
+				userDAOMethodsInput.getId()).user(user).build().getWebClient();
 		syncClient.sendRequest();
 	}
 }
