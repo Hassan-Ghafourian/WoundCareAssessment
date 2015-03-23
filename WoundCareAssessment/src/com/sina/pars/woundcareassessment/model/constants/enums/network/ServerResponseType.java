@@ -2,7 +2,7 @@ package com.sina.pars.woundcareassessment.model.constants.enums.network;
 
 public enum ServerResponseType {
 	
-	AuthenticatingResponse,
-	DownloadingResponse,
-	SyncResponse
+	AUTHENTICATING_RESPONSE,
+	DOWNLOADING_RESPONSE,
+	SYNC_RESPONSE
 }

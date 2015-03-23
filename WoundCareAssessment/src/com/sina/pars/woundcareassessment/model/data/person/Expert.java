@@ -8,7 +8,7 @@ public class Expert extends User {
 
 	public Expert(PersonalData personalData, Role role,
 			PersonalFolder personalFolder) {
-		super(personalData, Role.Expert, personalFolder);
+		super(personalData, Role.EXPERT, personalFolder);
 	}
 
 	

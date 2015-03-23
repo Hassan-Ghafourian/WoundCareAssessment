@@ -10,21 +10,21 @@ public enum RequestStatus {
 	 */
 	OK,
 
-	Created,
+	CREATED,
 
-	Accepted,
+	ACCEPTED,
 	/**
 	 * URI you provided in a request does not exist
 	 */
-	NotFoundError,
+	NOT_FOUND_ERROR,
 	/**
 	 * incomplete error about sync
 	 */
-	IncompleteError,
+	INCOMPLETE_ERROR,
 	/**
 	 * network connection error
 	 */
-	ConnectionError,
+	CONNECTION_ERROR,
 
-	UnknownError
+	UNKNOWN_ERROR
 }

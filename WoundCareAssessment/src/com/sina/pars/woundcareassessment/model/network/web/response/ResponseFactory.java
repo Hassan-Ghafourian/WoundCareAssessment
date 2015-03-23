@@ -11,14 +11,14 @@ public class ResponseFactory {
 			RequestStatus status, Object body, ID id) {
 		ServerResponse serverResponse = null;
 		switch (type) {
-		case AuthenticatingResponse:
+		case AUTHENTICATING_RESPONSE:
 			serverResponse = new AuthenticatingResponse(type, status, body,
 					id);
 			break;
-		case DownloadingResponse:
+		case DOWNLOADING_RESPONSE:
 			serverResponse = new DownloadingResponse(type, status, body, id);
 			break;
-		case SyncResponse:
+		case SYNC_RESPONSE:
 			serverResponse = new SyncResponse(type, status, body, id);
 			break;
 		default:

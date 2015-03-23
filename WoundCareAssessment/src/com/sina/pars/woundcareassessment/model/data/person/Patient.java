@@ -8,7 +8,7 @@ public class Patient extends User {
 
 	public Patient(PersonalData personalData, Role role,
 			PersonalFolder personalFolder) {
-		super(personalData, Role.Patient, personalFolder);
+		super(personalData, Role.PATIENT, personalFolder);
 	}
 
 }

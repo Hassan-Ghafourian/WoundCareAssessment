@@ -5,7 +5,7 @@ import java.util.List;
 public class PersonalFolder extends Folder {
 	private final List<Document> docsList;
 
-	protected PersonalFolder(List<Document> docsList) {
+	public PersonalFolder(List<Document> docsList) {
 		super();
 		this.docsList = docsList;
 	}

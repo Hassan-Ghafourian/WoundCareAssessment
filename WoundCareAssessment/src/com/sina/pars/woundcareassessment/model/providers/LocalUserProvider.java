@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.sina.pars.woundcareassessment.model.constants.metadata.LocalUserProviderMetaData;
-
+import stringcrud.Row;
+import stringcrud.StringCRUD;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
+
+import com.sina.pars.woundcareassessment.model.constants.metadata.LocalUserProviderMetaData;
 
 public class LocalUserProvider extends ContentProvider {
 
@@ -27,8 +29,8 @@ public class LocalUserProvider extends ContentProvider {
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		uriMatcher.addURI(LocalUserProviderMetaData.AUTHORITY,
-				LocalUserProviderMetaData.LocalUserTableMetaData.TABLE_NAME + "/*",
-				INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR);
+				LocalUserProviderMetaData.LocalUserTableMetaData.TABLE_NAME
+						+ "/*", INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR);
 	}
 
 	@Override
@@ -78,7 +80,12 @@ public class LocalUserProvider extends ContentProvider {
 		switch (uriMatcher.match(uri)) {
 		case INCOMING_LOCAL_SINGLE_USER_URI_INDICATOR:
 			String userName = uri.getPathSegments().get(1);
-			MatrixCursor cursor = new MatrixCursor(new String[] { "column1" });
+			Row row = StringCRUD.query(tree, userName);
+			MatrixCursor cursor;
+			cursor = new MatrixCursor(new String[] { "column1" });
+			if (!"".equals(row.getID())) {//userName exists and was found
+				cursor.newRow().add(row);
+			}
 			return cursor;
 		default:
 			throw new IllegalArgumentException("the URI >> [" + uri.toString()

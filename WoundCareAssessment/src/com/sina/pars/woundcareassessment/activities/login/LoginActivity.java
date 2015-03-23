@@ -26,7 +26,7 @@ import com.sina.pars.woundcareassessment.model.data.person.Newcomer;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClient;
 import com.sina.pars.woundcareassessment.model.network.web.client.WebClientFactory;
 import com.sina.pars.woundcareassessment.model.network.web.response.ServerResponse;
-import com.sina.pars.woundcareassessment.model.providers.SafeRawUser;
+import com.sina.pars.woundcareassessment.model.providers.SafeUser;
 
 import de.greenrobot.event.EventBus;
 
@@ -106,7 +106,7 @@ public class LoginActivity extends Activity implements Alertable,
 
 	private void authenticate() {
 		WebClient authenticatingClient = new WebClientFactory.Builder(
-				RequestType.Authenticating,
+				RequestType.AUTHENTICATING,
 				getId(LoginActivityMetaData.Methods.AUTHENTICATE))
 				.userName(userName.getText().toString())
 				.password(password.getText().toString()).build().getWebClient();
@@ -114,17 +114,19 @@ public class LoginActivity extends Activity implements Alertable,
 	}
 
 	private void getSafeRawUser() {
-		SafeRawUser.getSafe(userName.getText().toString(),
+		SafeUser.getSafe(userName.getText().toString(),
 				getId(LoginActivityMetaData.Methods.GET_SAFE_RAW_USER));
 	}
 
 	public void onEvent(ServerResponse response) {
 		if (this.matchID(response.getId())) {
-			if (response.getType() == ServerResponseType.AuthenticatingResponse) {
+			if (response.getType() == ServerResponseType.AUTHENTICATING_RESPONSE) {
 				switch (response.getStatus()) {
 				case OK:
+					// TODO do we really need "newcomer" in flow of Application?
 					Newcomer newcomer = new Newcomer((Role) response.getBody(),
 							userName.getText().toString());
+					Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show();
 					getSafeRawUser();
 					break;
 				default:

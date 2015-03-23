@@ -7,7 +7,7 @@ public abstract class PersonalData extends Data {
 	private final String name;
 	private final String family;
 
-	public PersonalData(String userName, String name, String family) {
+	protected PersonalData(String userName, String name, String family) {
 		this.userName = userName;
 		this.name = name;
 		this.family = family;

@@ -57,6 +57,9 @@ public class UserDAOImplementer implements UserDAO {
 				e.printStackTrace();
 			}
 		case REMOTE:
+			WebClient downkoadClient = new WebClientFactory.Builder(RequestType.DOWNLOADING,
+					userDAOMethodsInput.getId()).build().getWebClient();
+			downkoadClient.sendRequest();
 			break;
 
 		default:
@@ -101,7 +104,7 @@ public class UserDAOImplementer implements UserDAO {
 		String userName = userDAOMethodsInput.getUserName();
 		return Uri
 				.parse(LocalUserProviderMetaData.LocalUserTableMetaData.CONTENT_URI
-						+ userName);
+						+"/" + userName);
 	}
 
 	@Override
@@ -114,7 +117,7 @@ public class UserDAOImplementer implements UserDAO {
 			throw new IllegalArgumentException(
 					"userDAOMethodsInput.getEffectDestinationType() must be EffectDestinationType.REMOTE");
 		}
-		WebClient syncClient = new WebClientFactory.Builder(RequestType.Sync,
+		WebClient syncClient = new WebClientFactory.Builder(RequestType.SYNC,
 				userDAOMethodsInput.getId()).user(user).build().getWebClient();
 		syncClient.sendRequest();
 	}

@@ -30,8 +30,8 @@ public class AuthenticatClient implements WebClient {
 	@Override
 	public void sendRequest() {
 		if (!Internetconnection.isDeviceOnline()) {
-			publishResponse(ServerResponseType.AuthenticatingResponse,
-					RequestStatus.ConnectionError, new Object(), id);
+			publishResponse(ServerResponseType.AUTHENTICATING_RESPONSE,
+					RequestStatus.CONNECTION_ERROR, new Object(), id);
 		} else {
 			new HttpTask().execute();
 		}
@@ -62,13 +62,13 @@ public class AuthenticatClient implements WebClient {
 			final String lowerCaseUserName = AuthenticatClient.this.userName
 					.toLowerCase(Locale.getDefault());
 			if (lowerCaseUserName.contains("patient")) {
-				role = Role.Patient;
+				role = Role.PATIENT;
 			} else if (lowerCaseUserName.contains("expert")) {
-				role = Role.Expert;
+				role = Role.EXPERT;
 			} else if (lowerCaseUserName.contains("unregistered")) {
-				role = Role.Unregistered;
+				role = Role.UNREGISTERED;
 			}
-			publishResponse(ServerResponseType.AuthenticatingResponse,
+			publishResponse(ServerResponseType.AUTHENTICATING_RESPONSE,
 					RequestStatus.OK, role, id);
 		}
 	}

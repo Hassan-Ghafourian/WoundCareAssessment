@@ -7,8 +7,7 @@ import android.database.Cursor;
 import com.sina.pars.woundcareassessment.model.constants.enums.userdao.EffectDestinationType;
 import com.sina.pars.woundcareassessment.model.data.person.User;
 
-public class SafeRawUser {
-	private String rawData;
+public class SafeUser {
 
 	/**
 	 * posts associated <b>safe</b> "user" instance to client.
@@ -25,6 +24,7 @@ public class SafeRawUser {
 			User user = new UserConverter().convert(User.class, raw);
 			syncUser(user, id);
 		} else {
+			queryRemote(userName, id);
 			return;
 		}
 	}
@@ -34,10 +34,16 @@ public class SafeRawUser {
 				new UserDAOMethodsInput(id, EffectDestinationType.LOCAL,
 						userName, null));
 	}
+	
+	private static Cursor queryRemote(String userName, ID id) {
+		return UserDAOImplementer.getInstance().query(
+				new UserDAOMethodsInput(id, EffectDestinationType.REMOTE,
+						userName, null));
+	}
 
 	private static void syncUser(User user, ID id) {
 		UserDAOImplementer.getInstance().sync(
-				new UserDAOMethodsInput(null, EffectDestinationType.REMOTE, "",
+				new UserDAOMethodsInput(id, EffectDestinationType.REMOTE, "",
 						user));
 	}
 }

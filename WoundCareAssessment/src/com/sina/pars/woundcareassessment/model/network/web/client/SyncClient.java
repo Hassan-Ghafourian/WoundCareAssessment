@@ -27,8 +27,8 @@ public class SyncClient implements WebClient {
 	@Override
 	public void sendRequest() {
 		if (!Internetconnection.isDeviceOnline()) {
-			publishResponse(ServerResponseType.SyncResponse,
-					RequestStatus.ConnectionError, new Object(), id);
+			publishResponse(ServerResponseType.SYNC_RESPONSE,
+					RequestStatus.CONNECTION_ERROR, new Object(), id);
 		} else {
 			new HttpTask().execute();
 		}
@@ -48,7 +48,7 @@ public class SyncClient implements WebClient {
 		@Override
 		protected void onPostExecute(Boolean bool) {
 			SyncResponse syncResponse = (SyncResponse) ResponseFactory
-					.productResponse(ServerResponseType.SyncResponse,
+					.productResponse(ServerResponseType.SYNC_RESPONSE,
 							RequestStatus.OK, user,id);
 			EventBus.getDefault().post(syncResponse);
 		}

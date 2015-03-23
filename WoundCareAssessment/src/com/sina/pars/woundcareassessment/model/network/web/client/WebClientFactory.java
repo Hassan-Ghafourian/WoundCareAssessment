@@ -50,14 +50,14 @@ public class WebClientFactory {
 
 	private WebClientFactory(Builder builder) {
 		switch (builder.type) {
-		case Authenticating:
+		case AUTHENTICATING:
 			webClient = new AuthenticatClient(builder.userName,
 					builder.password, builder.id);
 			break;
-		case Downloading:
+		case DOWNLOADING:
 			webClient = new DownloadClient(builder.userName, builder.id);
 			break;
-		case Sync:
+		case SYNC:
 			webClient = new SyncClient(builder.user, builder.id);
 			break;
 
