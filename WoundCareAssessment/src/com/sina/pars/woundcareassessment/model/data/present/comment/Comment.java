@@ -1,4 +1,4 @@
-package com.sina.pars.woundcareassessment.model.data.present;
+package com.sina.pars.woundcareassessment.model.data.present.comment;
 
 import java.util.Date;
 

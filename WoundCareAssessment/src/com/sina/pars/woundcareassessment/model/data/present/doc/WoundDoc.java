@@ -1,9 +1,10 @@
-package com.sina.pars.woundcareassessment.model.data.present;
+package com.sina.pars.woundcareassessment.model.data.present.doc;
 
 import java.util.List;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.data.WoundSite;
 import com.sina.pars.woundcareassessment.model.data.bradenassessment.BradenAssessment;
+import com.sina.pars.woundcareassessment.model.data.present.paper.Paper;
 
 public class WoundDoc extends Document {
 

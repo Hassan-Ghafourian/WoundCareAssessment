@@ -1,8 +1,9 @@
-package com.sina.pars.woundcareassessment.model.data.present;
+package com.sina.pars.woundcareassessment.model.data.present.paper;
 
 import java.util.List;
 
 import com.sina.pars.woundcareassessment.model.data.Data;
+import com.sina.pars.woundcareassessment.model.data.present.comment.Comment;
 
 public class Paper extends Data {
 
