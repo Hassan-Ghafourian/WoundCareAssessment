@@ -1,4 +1,4 @@
-package utilities;
+package utilities.converter;
 
 public class UserConverter implements Converter{
 

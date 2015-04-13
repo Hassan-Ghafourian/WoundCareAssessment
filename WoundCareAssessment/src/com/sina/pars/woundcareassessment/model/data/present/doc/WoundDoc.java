@@ -1,23 +1,45 @@
 package com.sina.pars.woundcareassessment.model.data.present.doc;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.data.WoundSite;
 import com.sina.pars.woundcareassessment.model.data.bradenassessment.BradenAssessment;
-import com.sina.pars.woundcareassessment.model.data.present.paper.Paper;
+import com.sina.pars.woundcareassessment.model.data.present.paper.WoundPaper;
 
-public class WoundDoc extends Document {
+public class WoundDoc extends Document<WoundPaper> {
 
 	private final BradenAssessment bradenAssessment;
 	private final WoundSite woundSite;
-	private final List<Paper> papersList;
+		
+	public static class Builder {
+		private final BradenAssessment bradenAssessment;
+		private final WoundSite woundSite;
+		private final ArrayList<WoundPaper> paperList;
+		private boolean isPersonal = true;
+		
+		public Builder(BradenAssessment bradenAssessment, WoundSite woundSite,
+				ArrayList<WoundPaper> paperList) {
+			super();
+			this.bradenAssessment = bradenAssessment;
+			this.woundSite = woundSite;
+			this.paperList = paperList;
+		}
+		
+		public Builder isPersonal(boolean isPersonal) {
+			this.isPersonal = isPersonal;
+			return this;
+		}
 
-	protected WoundDoc(BradenAssessment bradenAssessment, WoundSite woundSite,
-			List<Paper> papersList) {
-		super();
-		this.bradenAssessment = bradenAssessment;
-		this.woundSite = woundSite;
-		this.papersList = papersList;
+		public WoundDoc build(){
+			return new WoundDoc(this);
+		}
+
+	}
+
+	private WoundDoc(Builder builder) {
+		super(builder.isPersonal,builder.paperList);
+		this.bradenAssessment = builder.bradenAssessment;
+		this.woundSite = builder.woundSite;
 	}
 
 	public BradenAssessment getBradenAssessment() {
@@ -26,10 +48,6 @@ public class WoundDoc extends Document {
 
 	public WoundSite getWoundSite() {
 		return woundSite;
-	}
-
-	public List<Paper> getPapersList() {
-		return papersList;
 	}
 
 }

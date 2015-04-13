@@ -2,13 +2,26 @@ package com.sina.pars.woundcareassessment.model.data.person;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.data.Role;
 import com.sina.pars.woundcareassessment.model.data.personal.PersonalData;
-import com.sina.pars.woundcareassessment.model.data.present.folder.PersonalFolder;
+import com.sina.pars.woundcareassessment.model.data.present.folder.WoundFolder;
 
 public class Patient extends User {
+	
+	public static class Builder{
+		private final PersonalData personalData;
+		private final WoundFolder woundFolder;
+		
+		public Builder(PersonalData personalData, WoundFolder woundFolder) {
+			this.personalData = personalData;
+			this.woundFolder = woundFolder;
+		}
+		
+		public Patient build(){
+			return new Patient(this);
+		}
+	}
 
-	public Patient(PersonalData personalData, Role role,
-			PersonalFolder personalFolder) {
-		super(personalData, Role.PATIENT, personalFolder);
+	private Patient(Builder builder) {
+		super(builder.personalData, Role.PATIENT, builder.woundFolder);
 	}
 
 }

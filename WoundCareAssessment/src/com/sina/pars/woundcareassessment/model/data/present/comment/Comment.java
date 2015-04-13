@@ -11,11 +11,28 @@ public class Comment extends Data{
 	private final Date date;
 	private final UserSpec ownerSpec;
 
-	protected Comment(String text, Date date, UserSpec ownerSpec) {
+	public static class Builder {
+		private final String text;
+		private final Date date;
+		private final UserSpec ownerSpec;
+
+		public Builder(String text, Date date, UserSpec ownerSpec) {
+			this.text = text;
+			this.date = date;
+			this.ownerSpec = ownerSpec;
+		}
+		
+		public Comment build(){
+			return new Comment(this);
+		}
+
+	}
+	
+	private Comment(Builder builder) {
 		super();
-		this.text = text;
-		this.date = date;
-		this.ownerSpec = ownerSpec;
+		this.text = builder.text;
+		this.date = builder.date;
+		this.ownerSpec = builder.ownerSpec;
 	}
 
 	public String getText() {

@@ -9,17 +9,43 @@ public class PatientPersonalData extends PersonalData {
 	private final Date dateOfBirth;
 	private final String address;
 	private final String telephoneNumber;
-	private final String Comments;
+	private final String comments;
 
-	public PatientPersonalData(String userName, String name, String family,
-			Gender gender, Date dateOfBirth, String address,
-			String telephoneNumber, String comments) {
-		super(userName, name, family);
-		this.gender = gender;
-		this.dateOfBirth = dateOfBirth;
-		this.address = address;
-		this.telephoneNumber = telephoneNumber;
-		Comments = comments;
+	public static class Builder {
+		private final Gender gender;
+		private final Date dateOfBirth;
+		private final String address;
+		private final String telephoneNumber;
+		private final String comments;
+		private final String userName;
+		private final String name;
+		private final String family;
+
+		public Builder(Gender gender, Date dateOfBirth, String address,
+				String telephoneNumber, String comments, String userName,
+				String name, String family) {
+			this.gender = gender;
+			this.dateOfBirth = dateOfBirth;
+			this.address = address;
+			this.telephoneNumber = telephoneNumber;
+			this.comments = comments;
+			this.userName = userName;
+			this.name = name;
+			this.family = family;
+		}
+
+		public PatientPersonalData build() {
+			return new PatientPersonalData(this);
+		}
+	}
+
+	private PatientPersonalData(Builder builder) {
+		super(builder.userName, builder.name, builder.family);
+		this.gender = builder.gender;
+		this.dateOfBirth = builder.dateOfBirth;
+		this.address = builder.address;
+		this.telephoneNumber = builder.telephoneNumber;
+		comments = builder.comments;
 	}
 
 	public Gender getGender() {
@@ -40,7 +66,7 @@ public class PatientPersonalData extends PersonalData {
 	}
 
 	public String getComments() {
-		return Comments;
+		return comments;
 	}
 
 	@Override
@@ -49,7 +75,7 @@ public class PatientPersonalData extends PersonalData {
 		return super.toString() + "\t ... \t" + "PatientPersonalData [gender="
 				+ gender + ", dateOfBirth=" + dateOfBirth + ", address="
 				+ address + ", telephoneNumber=" + telephoneNumber
-				+ ", Comments=" + Comments + "]";
+				+ ", comments=" + comments + "]";
 	}
 
 }
