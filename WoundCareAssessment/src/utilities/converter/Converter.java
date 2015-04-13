@@ -1,5 +1,5 @@
 package utilities.converter;
 
-public interface Converter {
-	public <T> T convert(Class<T> type, Object value);
+public interface Converter<T> {
+	public T convert(Class<T> type, Object value);
 }

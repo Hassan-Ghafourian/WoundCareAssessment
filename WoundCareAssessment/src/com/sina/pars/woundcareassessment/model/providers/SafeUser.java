@@ -1,6 +1,6 @@
 package com.sina.pars.woundcareassessment.model.providers;
 
-import utilities.converter.UserConverter;
+import utilities.converter.DataConverter;
 import utilities.id.ID;
 import android.database.Cursor;
 
@@ -21,7 +21,8 @@ public class SafeUser {
 			cursor.moveToFirst();
 			raw = cursor.getString(0);
 			cursor.close();
-			User user = new UserConverter().convert(User.class, raw);
+//			User user = new UserConverter().convert(User.class, raw);
+			User user = new DataConverter<User>().convert(User.class, raw);
 			syncUser(user, id);
 		} else {
 			queryRemote(userName, id);
