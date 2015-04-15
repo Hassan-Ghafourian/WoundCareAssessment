@@ -1,6 +1,6 @@
 package com.sina.pars.woundcareassessment.model.providers;
 
-import utilities.converter.DataConverter;
+import utilities.converters.DataConverter;
 import utilities.id.ID;
 import android.database.Cursor;
 
