@@ -1,6 +1,6 @@
 package com.sina.pars.woundcareassessment.model.constants;
 
-import utilities.converters.Converter;
+import com.sina.pars.woundcareassessment.model.converters.Converter;
 
 /**
  * Constants to store complete class names.Helps in deserilizing in some classes

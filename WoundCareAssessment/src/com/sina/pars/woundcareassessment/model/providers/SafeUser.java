@@ -1,10 +1,10 @@
 package com.sina.pars.woundcareassessment.model.providers;
 
-import utilities.converters.DataConverter;
 import utilities.id.ID;
 import android.database.Cursor;
 
 import com.sina.pars.woundcareassessment.model.constants.enums.userdao.EffectDestinationType;
+import com.sina.pars.woundcareassessment.model.converters.data.DataConverter;
 import com.sina.pars.woundcareassessment.model.data.person.User;
 
 public class SafeUser {
